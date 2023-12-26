@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Category Form</title>
+</head>
+<body>
+<h2>Category Form</h2>
+
+<form th:action="@{/edit-product}" th:object="${product}" method="post">
+    <input type="hidden" th:field="*{id}">
+    <input type="text" th:field="*{name}" placeholder="Name" required>
+    <input type="number" th:field="*{price}" placeholder="price" required>
+    <div class="form-group">
+        <label></label>
+        <select class="form-control" name="" th:field="*{categories.id}">
+            <option th:each="item : ${categories}" th:text="${item.categoryName}" th:value="${item.id}"></option>
+        </select>
+    </div>
+    <button type="submit">Update</button>
+</form>
+</body>
+</html>

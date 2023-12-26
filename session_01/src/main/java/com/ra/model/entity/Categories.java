@@ -1,6 +1,7 @@
 package com.ra.model.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "categories")
@@ -11,6 +12,9 @@ public class Categories {
     private Integer id;
     @Column(name = "name")
     private String categoryName;
+    @OneToMany(mappedBy = "categories",cascade = CascadeType.REMOVE)
+    private List<Product> productList;
+
     @Column(name = "status")
     private Boolean status;
 
@@ -22,6 +26,7 @@ public class Categories {
         this.categoryName = categoryName;
         this.status = status;
     }
+
 
     public Integer getId() {
         return id;

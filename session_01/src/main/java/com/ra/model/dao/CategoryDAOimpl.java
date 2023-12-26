@@ -54,16 +54,15 @@ public class CategoryDAOimpl implements CategoriesDAO {
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            Categories categories = session.get(Categories.class, id);
-            if (categories != null) {
-                session.delete(categories);
+            Categories category = session.get(Categories.class, id);
+            if (category != null) {
+                session.delete(category);
                 transaction.commit();
             }
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-
             e.printStackTrace();
         } finally {
             session.close();
