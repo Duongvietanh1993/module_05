@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Category Management</title>
+</head>
+<body>
+<h2>Category Management</h2>
+
+<!-- Create Category Form -->
+<a th:href="@{/create}">aa</a>
+
+<!-- List of Categories -->
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="category : ${categoriesList}">
+        <td th:text="${category.id}"></td>
+        <td th:text="${category.categoryName}"></td>
+        <td>
+            <a th:href="@{update/{id}(id=${category.id})}">Edit</a>
+            <a th:href="@{delete/{id}(id=${category.id})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
