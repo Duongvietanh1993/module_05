@@ -32,10 +32,7 @@ import java.util.Properties;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.ra")
-@PropertySource("classpath:config.properties")
 public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
-    @Value("${path}")
-    private String path;
 
     private ApplicationContext applicationContext;
 
@@ -43,7 +40,7 @@ public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
     public DataSource dataSource() {
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
         driverManagerDataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/demo_orm");
+        driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/quan_ly_hoc_sinh");
         driverManagerDataSource.setUsername("root");
         driverManagerDataSource.setPassword("tv14061993");
         return driverManagerDataSource;
@@ -111,13 +108,7 @@ public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
         return thymeleafViewResolver;
     }
 
-    @Bean
-    CommonsMultipartResolver multipartResolver() {
-        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-        multipartResolver.setMaxUploadSize(52428800);
-        return multipartResolver;
 
-    }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -126,8 +117,8 @@ public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/css/**", "/fonts/**", "/images/**", "/js/**", "/uploads/images/**")
-                .addResourceLocations("file:" + path, "classpath:assets/css/", "classpath:assets/fonts/", "classpath:assets/images/", "classpath:assets/js/");
+        registry.addResourceHandler("/css/**", "/fonts/**", "/images/**", "/js/**")
+                .addResourceLocations( "classpath:assets/css/", "classpath:assets/fonts/", "classpath:assets/images/", "classpath:assets/js/");
     }
 
 
