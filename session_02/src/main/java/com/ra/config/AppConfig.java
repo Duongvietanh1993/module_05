@@ -32,6 +32,10 @@ import java.util.Properties;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.ra")
+<<<<<<< HEAD
+=======
+
+>>>>>>> 60764e28a77918b08827d1eb21adee3312f2360c
 public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
 
     private ApplicationContext applicationContext;
@@ -40,7 +44,11 @@ public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
     public DataSource dataSource() {
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
         driverManagerDataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+<<<<<<< HEAD
         driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/quan_ly_hoc_sinh");
+=======
+        driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/quan_ly_sinh_vien");
+>>>>>>> 60764e28a77918b08827d1eb21adee3312f2360c
         driverManagerDataSource.setUsername("root");
         driverManagerDataSource.setPassword("tv14061993");
         return driverManagerDataSource;
@@ -117,7 +125,11 @@ public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+<<<<<<< HEAD
         registry.addResourceHandler("/css/**", "/fonts/**", "/images/**", "/js/**")
+=======
+        registry.addResourceHandler("/css/**", "/fonts/**", "/images/**", "/js/**", "/uploads/images/**")
+>>>>>>> 60764e28a77918b08827d1eb21adee3312f2360c
                 .addResourceLocations( "classpath:assets/css/", "classpath:assets/fonts/", "classpath:assets/images/", "classpath:assets/js/");
     }
 

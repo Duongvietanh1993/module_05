@@ -14,7 +14,7 @@ public class ClassRoom {
     private String className;
     @Column(name = "status")
     private Boolean classStatus;
-    @OneToMany(mappedBy = "class_room", cascade=CascadeType.REMOVE)
+    @OneToMany(mappedBy = "classRoom", cascade=CascadeType.REMOVE)
     private List<Student> students;
 
     public ClassRoom() {

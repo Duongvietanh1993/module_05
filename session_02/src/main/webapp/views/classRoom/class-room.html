@@ -40,8 +40,14 @@
 </head>
 <body>
 <div class="container">
+<<<<<<< HEAD
     <h1>Bảng Class Room</h1>
     <a th:href="@{create-class}" type="button" class="add-button">Thêm mới</a>
+=======
+    <h1 th:text="#{tableClass}"></h1>
+    <a th:href="@{/}" th:text="#{back}" type="button" class="add-button"></a>
+    <a th:href="@{create-class}" type="button" class="add-button" th:text="#{new}"></a>
+>>>>>>> 60764e28a77918b08827d1eb21adee3312f2360c
     <table>
         <thead>
         <tr>
@@ -57,12 +63,21 @@
             <td th:text="${item.className}"></td>
             <td th:text="${item.classStatus}"></td>
             <td>
+<<<<<<< HEAD
                 <a th:text="#{edit}"></a>
                 <a th:text="#{delete}"></a>
+=======
+                <a th:text="#{edit}" type="button" class="add-button"></a>
+                <a th:text="#{delete}" type="button" class="add-button"></a>
+>>>>>>> 60764e28a77918b08827d1eb21adee3312f2360c
             </td>
         </tr>
         </tbody>
     </table>
 </div>
 </body>
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> 60764e28a77918b08827d1eb21adee3312f2360c

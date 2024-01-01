@@ -41,6 +41,7 @@
             border: none;
             cursor: pointer;
         }
+<<<<<<< HEAD
     </style>
 </head>
 <body>
@@ -59,12 +60,58 @@
                 </label>
                 <label for="gender-female">
                     <input type="radio" id="gender-female" th:field="*{classId}" value="0" required> Ẩn
+=======
+        .add-button {
+            margin-bottom: 10px;
+            display: inline-block;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="/create-class/?lang=vi">VN</a>
+    <a href="/create-class/?lang=en">EN</a>
+    <h1 th:text="#{newInfo}"></h1>
+
+    <form th:action="@{/create-class}" th:object="${classRoom}" method="post">
+        <div class="form-group">
+            <label for="name" th:text="#{classroom}+':'"></label>
+            <input type="text" id="name" name="name" th:field="*{className}">
+        </div>
+        <div class="form-group">
+            <label th:text="#{status}+':'"></label>
+            <div class="gender-group">
+                <label for="gender-male">
+                    <input type="radio" id="gender-male" th:field="*{classStatus}" value="1" th:text="#{displayed}">
+                </label>
+                <label for="gender-female">
+                    <input type="radio" id="gender-female" th:field="*{classStatus}" value="0" th:text="#{hidden}">
+>>>>>>> 60764e28a77918b08827d1eb21adee3312f2360c
                 </label>
             </div>
         </div>
 
+<<<<<<< HEAD
         <button type="submit" class="submit-button">Thêm mới</button>
     </form>
 </div>
 </body>
 </html>
+=======
+        <button type="submit" class="submit-button" th:text="#{new}"></button>
+        <a th:href="@{/class-room}" th:text="#{back}" type="button" class="add-button"></a>
+    </form>
+</div>
+</body>
+</html>
+>>>>>>> 60764e28a77918b08827d1eb21adee3312f2360c
