@@ -4,7 +4,13 @@ import com.ra.model.dto.reponse.CategoryReponse;
 import com.ra.model.entity.Category;
 import com.ra.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+
+import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,18 +22,10 @@ public class CategoryServiceIMPL implements CategoryService {
     private CategoryRepository categoryRepository;
 
     @Override
-    public List<CategoryReponse> findAll() {
-        List<Category> categoryList = categoryRepository.findAll();
-        List<CategoryReponse> categoryReponseList = new ArrayList<>();
-        for (Category category : categoryList) {
-            CategoryReponse categoryReponse = new CategoryReponse();
-            categoryReponse.setId(category.getId());
-            categoryReponse.setCategoryName(category.getCategoryName());
-            categoryReponse.setStatus(category.isStatus());
-            categoryReponse.setProducts(category.getProducts());
-            categoryReponseList.add(categoryReponse);
-        }
-        return categoryReponseList;
+    public Page<CategoryReponse> findAll(Pageable pageable) {
+        Page<Category> categoryPage = categoryRepository.findAll(pageable);
+
+        return categoryPage.map(category -> new CategoryReponse(category));
     }
 
     @Override
@@ -45,4 +43,15 @@ public class CategoryServiceIMPL implements CategoryService {
     public void delete(Long id) {
         categoryRepository.deleteById(id);
     }
+
+    @Override
+    public Page<CategoryReponse> searchByName(Pageable pageable, String name) {
+        Page<Category> categoryPage = categoryRepository.findByCategoryNameContainingIgnoreCase(pageable, name);
+        return categoryPage.map(CategoryReponse::new);
+    }
+
+
+
+
+
 }

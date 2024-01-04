@@ -6,6 +6,7 @@ import com.ra.model.entity.Product;
 import com.ra.model.service.category.CategoryService;
 import com.ra.repository.CategoryRepository;
 import com.ra.repository.ProductRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class ProductServiceIMPL implements ProductService {
     @Autowired
     private ProductRepository productRepository;
     @Autowired
-    private CategoryRepository categoryRepository;
+    private CategoryService categoryService;
 
     @Override
     public List<Product> findAll() {
@@ -25,20 +26,32 @@ public class ProductServiceIMPL implements ProductService {
     }
 
     @Override
-    public Product saveOrUpdate(ProductRequest productRequest) {
+    public ProductRequest saveOrUpdate(ProductRequest productRequest) {
         //đối tượng từ dto sang entity
         Product product = new Product();
         product.setProductName(productRequest.getProductName());
         product.setPrice(productRequest.getPrice());
-        Optional<Category> categoryOptional = categoryRepository.findById(productRequest.getCategoryId());
-        product.setCategory(categoryOptional.orElse(null));
-        return productRepository.save(product);
+        Category category = categoryService.findById(productRequest.getCategoryId());
+        product.setCategory(category);
+        productRepository.save(product);
+        productRequest.setId(product.getId());
+        return productRequest;
     }
 
     @Override
-    public Product findById(Long id) {
+    public ProductRequest findById(Long id) {
         Optional<Product> productOptional = productRepository.findById(id);
-        return productOptional.orElse(null);
+        if (productOptional.isPresent()) {
+            Product product = productOptional.get();
+            ProductRequest productRequest = new ProductRequest();
+            productRequest.setId(product.getId());
+            productRequest.setProductName(product.getProductName());
+            productRequest.setPrice(product.getPrice());
+            productRequest.setCategoryId(product.getCategory().getId());
+            return productRequest;
+        } else {
+            throw new EntityNotFoundException("Product with ID" + id + "not found");
+        }
     }
 
     @Override

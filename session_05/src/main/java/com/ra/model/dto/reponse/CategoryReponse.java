@@ -1,6 +1,7 @@
 package com.ra.model.dto.reponse;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ra.model.entity.Category;
 import com.ra.model.entity.Product;
 import jakarta.persistence.*;
 
@@ -13,6 +14,11 @@ public class CategoryReponse {
     private List<Product> products;
 
     public CategoryReponse() {
+    }
+    public CategoryReponse(Category category) {
+        this.id = category.getId();
+        this.categoryName = category.getCategoryName();
+        this.status = category.isStatus();
     }
 
     public Long getId() {

@@ -4,6 +4,10 @@ import com.ra.model.dto.reponse.CategoryReponse;
 import com.ra.model.entity.Category;
 import com.ra.model.service.category.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +20,38 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    @GetMapping("/v1/api/search")
+    public ResponseEntity<Page<CategoryReponse>> search(@RequestParam(name = "keyword")String keyword,
+                                                        @RequestParam(defaultValue = "5",name = "limit")int limit,
+                                                        @RequestParam(defaultValue = "0",name = "page")int page,
+                                                        @RequestParam(defaultValue = "id", name = "sort") String sort,
+                                                        @RequestParam(defaultValue = "asc", name = "order") String order){
+        Pageable pageable;
+        if (order.equalsIgnoreCase("desc")) {
+            pageable = PageRequest.of(page, limit, Sort.by(sort).descending());
+        } else {
+            pageable = PageRequest.of(page, limit, Sort.by(sort).ascending());
+        }
+        Page<CategoryReponse> categoryReponses= categoryService.searchByName(pageable,keyword);
+        return new ResponseEntity<>(categoryReponses,HttpStatus.OK);
+    }
     @GetMapping("/categories")
-    public ResponseEntity<List<CategoryReponse>> categories() {
-        List<CategoryReponse> list = categoryService.findAll();
-        return new ResponseEntity<>(list, HttpStatus.OK);
+    public ResponseEntity<Page<CategoryReponse>> getAll(
+            @RequestParam(defaultValue = "5", name = "limit") int limit,
+            @RequestParam(defaultValue = "0", name = "page") int page,
+            @RequestParam(defaultValue = "id", name = "sort") String sort,
+            @RequestParam(defaultValue = "asc", name = "order") String order) {
+
+        Pageable pageable;
+        if (order.equalsIgnoreCase("desc")) {
+            pageable = PageRequest.of(page, limit, Sort.by(sort).descending());
+        } else {
+            pageable = PageRequest.of(page, limit, Sort.by(sort).ascending());
+        }
+
+        Page<CategoryReponse> categoryPage = categoryService.findAll(pageable);
+
+        return new ResponseEntity<>(categoryPage, HttpStatus.OK);
     }
 
     @PostMapping("/categories")
